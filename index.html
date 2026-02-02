@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Swagatam mere aji oji!!</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#ff4d6d,#ff9a9e);
+}
+
+.pattern{
+  position:absolute;
+  border-radius:50%;
+  opacity:0.35;
+  z-index:1;
+}
+
+.clickable{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  color:#000;
+  cursor:pointer;
+  text-align:center;
+  padding:12px;
+  user-select:none;
+  opacity:0.6;
+  transition:opacity 0.1s ease;
+}
+
+.clickable.active{
+  opacity:1;
+}
+
+/* ONLY CLICK ME 1 ACTIVE STATE */
+.clickable.one-active{
+  background:#000 !important;
+  color:#fff !important;
+}
+
+/* COLORS */
+.red{background:#ff1e56;}
+.pink{background:#ff9a9e;}
+.black{background:#000;color:#fff;}
+
+.float{
+  position:fixed;
+  animation:floatUp linear infinite;
+  z-index:0;
+}
+@keyframes floatUp{
+  from{transform:translateY(110vh);}
+  to{transform:translateY(-15vh);}
+}
+
+.card{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(255,255,255,0.96);
+  padding:45px 60px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,0.3);
+  z-index:10;
+}
+
+h1{color:#ff1e56;margin-bottom:8px;}
+h6{margin-bottom:20px;}
+
+button{
+  padding:14px 35px;
+  font-size:18px;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+}
+
+#yes{background:#ff1e56;color:#fff;}
+#no{
+  background:#000;
+  color:#fff;
+  position:fixed;
+  z-index:9999;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SMALL ORIGINAL (BACKGROUND ONLY) -->
+<div class="pattern red" style="width:90px;height:90px;top:5%;left:5%;"></div>
+
+<!-- 🔁 CLICK ME 1 CONTENT MOVED TO LARGER DIV -->
+<div class="pattern pink clickable"
+     style="width:180px;height:180px;top:10%;left:70%;"
+     data-msg="I love you ❤️">Click me 1</div>
+
+<div class="pattern black clickable"
+     style="width:120px;height:120px;top:65%;left:80%;"
+     data-msg="Picha to nhi chorenge aapka kabhi😈">Click me 2</div>
+
+<div class="pattern red" style="width:220px;height:220px;top:70%;left:5%;"></div>
+
+<!-- SMALL ORIGINAL (BACKGROUND ONLY) -->
+<div class="pattern pink" style="width:130px;height:130px;top:40%;left:20%;"></div>
+
+<!-- 🔁 CLICK ME 3 CONTENT MOVED TO LARGER DIV -->
+<div class="pattern red clickable"
+     style="width:160px;height:160px;top:20%;left:30%;"
+     data-msg="Chorne bhi nhi dene aapko 😏">Click me 3</div>
+
+<div class="pattern black" style="width:100px;height:100px;top:15%;left:45%;"></div>
+
+<div class="pattern red clickable"
+     style="width:140px;height:140px;top:85%;left:45%;"
+     data-msg="I know I know, soch rhe honge pagal ho gyi h! 🤪">Click me 4</div>
+
+<div class="pattern pink" style="width:170px;height:170px;top:30%;left:5%;"></div>
+
+<div class="pattern black clickable"
+     style="width:150px;height:150px;top:55%;left:15%;"
+     data-msg="Kya kre, ho to gye hai 😌">Click me 5</div>
+
+<div class="pattern pink clickable"
+     style="width:110px;height:110px;top:80%;left:70%;"
+     data-msg="Aapke pyaar me!! 😂🙈">Click me 6</div>
+
+<!-- FLOATING EMOJIS -->
+<script>
+const emojis=["💋","❤️","💖","🖤","🌹","💕","💋","💘","🖤","💞","❤️","🌹","😘","😍","💋","🥰","🌹","🔥","🖤","❤️"];
+for(let i=0;i<80;i++){
+  const e=document.createElement("div");
+  e.className="float";
+  e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.fontSize=(14+Math.random()*30)+"px";
+  e.style.animationDuration=(4+Math.random()*8)+"s";
+  document.body.appendChild(e);
+}
+</script>
+
+<div class="card">
+  <h1>Will you be my Valentine? 💕</h1>
+  <h6>I bet you can’t choose NO 😈</h6>
+  <button id="yes"
+    onclick="alert('HAHA 😂😌💖 I knew it, Isiliye bolte hai humse hoshiyari nhi babuaaa!!!')">
+    Yes
+  </button>
+</div>
+
+<button id="no">No</button>
+
+<script>
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+const y=yesBtn.getBoundingClientRect();
+noBtn.style.left=y.right+15+"px";
+noBtn.style.top=y.top+"px";
+
+document.addEventListener("mousemove",(e)=>{
+  const r=noBtn.getBoundingClientRect();
+  if(Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2))<120){
+    noBtn.style.left=Math.random()*(window.innerWidth-r.width)+"px";
+    noBtn.style.top=Math.random()*(window.innerHeight-r.height)+"px";
+  }
+});
+
+/* CLICK ME TOGGLE */
+document.querySelectorAll(".clickable").forEach((d,i)=>{
+  const original="Click me "+(i+1);
+  d.addEventListener("click",()=>{
+    const isOriginal=d.innerText===original;
+
+    if(i===0 && isOriginal){
+      d.innerHTML="I love you <span style='color:red'>❤️</span>";
+      d.classList.add("one-active");
+    }else{
+      d.innerText=isOriginal ? d.dataset.msg : original;
+      d.classList.remove("one-active");
+    }
+
+    d.classList.toggle("active", isOriginal);
+  });
+});
+</script>
+
+</body>
+</html>
